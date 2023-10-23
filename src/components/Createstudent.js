@@ -105,13 +105,24 @@ const Createstudent = () => {
 
     switch (name) {
       case "studentName":
-        handleNameChange(name, value)
+        handleNameChange(name, value);
+        break; // Add this break statement
       case "phoneNumber":
-        handleNumChange(name, value)
+        handleNumChange(name, value);
+        break; // Add this break statement
       case "email":
-        handleEmailChange(name, value)
+        handleEmailChange(name, value);
+        break; // Add this break statement
+      default:
+        setStudentData({ ...studentData, [name]: value });
     }
   };
+
+
+
+
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -247,7 +258,7 @@ const Createstudent = () => {
                               className="form-control"
                               required
                             />
-                            {showEmail && <small className="form-text text-danger">Number should be not more than 10 digits</small>}
+                            {showEmail && <small className="form-text text-danger">Enter valid Email</small>}
                           </div>
                         </div>
 
