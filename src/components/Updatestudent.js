@@ -19,6 +19,10 @@ const Updatestudent = () => {
   const [pinCode, setPincode] = useState(location.state.pinCode);
   const [state, setState] = useState(location.state.state);
   const [gender, setGender] = useState(location.state.gender);
+  const [nameError, setNameError] = useState('');
+  const [pinCodeError, setPinCodeError] = useState('');
+  const [cityError, setCityError] = useState('');
+  const [stateError, setStateError] = useState('');
 
   const navigate = useNavigate();
 
@@ -33,6 +37,49 @@ const Updatestudent = () => {
       setPhoneNumber(num);
     }
   };
+
+  const handleCityChange = (e) => {
+    const cityInput = e.target.value;
+    if (/[^a-zA-Z ]/.test(cityInput)) {
+      setCityError('Only alphabetic characters are allowed');
+    } else {
+      setCityError('');
+      setCity(cityInput);
+    }
+  };
+
+  const handleStateChange = (e) => {
+    const stateInput = e.target.value;
+    if (/[^a-zA-Z ]/.test(stateInput)) {
+      setStateError('Only alphabetic characters are allowed');
+    } else {
+      setStateError('');
+      setState(stateInput);
+    }
+  };
+  const handleNameChange = (e) => {
+    const name = e.target.value;
+    if (/[^a-zA-Z ]/.test(name)) {
+      setNameError('Only alphabetic characters are allowed');
+    } else {
+      setNameError('');
+      setStudentName(name);
+    }
+  };
+  const handlePinCodeChange = (e) => {
+    const pinCodeInput = e.target.value;
+    if (pinCodeInput.length <= 6) {
+      setPinCodeError('');
+      setPincode(pinCodeInput);
+    } else {
+      setPinCodeError('Pin code should be exactly 6 digits');
+    }
+  };
+
+
+
+
+
   const handleUpdate = (e) => {
     console.log(id);
     e.preventDefault();
@@ -92,9 +139,14 @@ const Updatestudent = () => {
                               type="text"
                               name="studentname"
                               value={studentname}
-                              onChange={(e) => setStudentName(e.target.value)}
+                              onInput={handleNameChange}
                               className="form-control"
                             />
+                            {nameError && (
+                              <small className="form-text text-danger">
+                                {nameError}
+                              </small>
+                            )}
                           </div>
                         </div>
                         <div className="d-flex flex-row align-items-center mb-2">
@@ -213,9 +265,14 @@ const Updatestudent = () => {
                             <input
                               type="text"
                               value={city}
-                              onChange={(e) => setCity(e.target.value)}
+                              onChange={handleCityChange}
                               className="form-control"
                             />
+                            {cityError && (
+                              <small className="form-text text-danger">
+                                {cityError}
+                              </small>
+                            )}
                           </div>
                         </div>
                         <div className="d-flex flex-row align-items-center mb-2">
@@ -227,9 +284,14 @@ const Updatestudent = () => {
                             <input
                               type="text"
                               value={state}
-                              onChange={(e) => setState(e.target.value)}
+                              onChange={handleStateChange}
                               className="form-control"
                             />
+                            {stateError && (
+                              <small className="form-text text-danger">
+                                {stateError}
+                              </small>
+                            )}
                           </div>
                         </div>
                         <div className="d-flex flex-row align-items-center mb-2">
@@ -242,10 +304,15 @@ const Updatestudent = () => {
                               type="number"
                               name="pinCode"
                               value={pinCode}
-                              onChange={(e) => setPincode(e.target.value)}
+                              onChange={handlePinCodeChange}
                               className="form-control"
                               required
                             />
+                            {pinCodeError && (
+                              <small className="form-text text-danger">
+                                {pinCodeError}
+                              </small>
+                            )}
                           </div>
                         </div>
                         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
